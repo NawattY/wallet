@@ -1,11 +1,11 @@
+import databaseConfig from '@app/config/database.config';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import mysqlConfig from './mysql.config';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    ConfigModule.forFeature(mysqlConfig),
+    ConfigModule.forFeature(databaseConfig),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -13,12 +13,13 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '
         configService: ConfigService
       ): TypeOrmModuleOptions =>
         configService.get('core.isTesting')
-          ? configService.get('mysql.testing')
-          : configService.get('mysql.default'),
+          ? configService.get('database.testing')
+          : configService.get('database.mysql.default'),
     } as TypeOrmModuleAsyncOptions),
+    TypeOrmModule.forFeature([]),
   ],
   exports: [TypeOrmModule],
   controllers: [],
   providers: [],
 })
-export class MySqlModule {}
+export class DatabaseModule {}

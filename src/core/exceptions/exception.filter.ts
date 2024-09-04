@@ -106,7 +106,7 @@ export class ExceptionFilter implements ExceptionFilterInterface {
       },
     } as ErrorResponseInterface;
 
-    if (this.configService.get('core.exceptionLogEnabled')) {
+    if (this.configService.get('app.exceptionLogEnabled')) {
       // const logMessage = `[${ExceptionFilter.name}] exception.log`;
 
       // this.logger.error(logMessage, { payload });
