@@ -1,4 +1,5 @@
 import { registerAs } from "@nestjs/config";
+import { join } from "path";
 
 export default registerAs('database', () => ({
   mysql: {
@@ -10,10 +11,12 @@ export default registerAs('database', () => ({
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: false,
-      entities: ['@app/database/entities/**/*.entity.js'],
-      migrations: ['@app/database/migrations/*.js'],
+      entities: [
+        join(__dirname, '../database/entities/**/*.entity{.ts,.js}'),
+      ],
+      migrations: [join(__dirname, '../database/migrations/*{.ts,.js}')],
       cli: {
-        migrationsDir: '@app/database/migrations',
+        migrationsDir: 'src/app/database/migrations',
       },
       debug: process.env.DB_DEBUG === 'true' ? true : false,
     },
@@ -21,10 +24,12 @@ export default registerAs('database', () => ({
   testing: {
     type: 'sqlite',
     database: ':memory:',
-    entities: ['@app/database/entities/**/*.entity.ts'],
+    entities: [
+      join(__dirname, '../database/entities/**/*.entity{.ts,.js}'),
+    ],
     synchronize: true,
     migrationsRun: false,
-    migrations: ['@app/database/migrations/**/*.js'],
+    migrations: [join(__dirname, '../database/migrations/*{.ts,.js}')],
   },
 }));
   
