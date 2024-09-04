@@ -4,6 +4,10 @@ import { ErrorCodes as CoreErrorCodes } from '@core/exceptions/error-codes.const
 import { HttpExceptionResponseInterface } from '@core/exceptions/exception.filter';
 
 export class ApiException extends HttpException {
+  private readonly errorCode: number;
+  private readonly errors: string[];
+  private readonly errorMessage: string;
+
   constructor(
     errorCode: number,
     errors: string[] = [],
@@ -24,5 +28,21 @@ export class ApiException extends HttpException {
       } as HttpExceptionResponseInterface,
       status,
     );
+
+    this.errorCode = errorCode;
+    this.errors = errors;
+    this.errorMessage = errorMessage;
+  }
+
+  public getErrorCode(): number {
+    return this.errorCode;
+  }
+
+  public getErrorMessage(): string {
+    return this.errorMessage;
+  }
+
+  public getErrors(): string[] {
+    return this.errors;
   }
 }

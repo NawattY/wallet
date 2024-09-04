@@ -1,3 +1,4 @@
+import { ApiException } from '@core/exceptions/api.exception';
 import { ErrorResponseInterface } from '@core/exceptions/exception.filter';
 import { HttpStatus } from '@nestjs/common';
 import { IPaginationLinks, IPaginationMeta } from 'nestjs-typeorm-paginate';
@@ -31,8 +32,18 @@ export class ApiResource {
    * Errors response
    * @param error
    */
-  static errorResponse(error: Error): ErrorResponseInterface {
-    // All exception will be handle by exception filters
+  static errorResponse(error: any): ErrorResponseInterface {
+    if (error instanceof ApiException) {
+      return {
+        status: { code: error.getStatus(), message: error.message },
+        error: {
+          code: error.getErrorCode(),
+          message: error.getErrorMessage(),
+          errors: error.getErrors(),
+        },
+      };
+    }
+
     throw error;
   }
 }
