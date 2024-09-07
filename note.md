@@ -35,7 +35,7 @@ refund
 topup
 withdraw
 
-#transfers type
+#transfers type ส่งมากับ meta ได้ ถ้าไ่ส่งจะลงเป็น earn / burn
 birthday_promotion
 burn
 deal_for_you
@@ -46,3 +46,10 @@ privilege
 product
 promotion
 refund
+
+#transactions type
+deposit => earn
+expired
+refund
+topup => สร้างกระเป๋า เพราะใช้ api deposit
+withdraw => burn

@@ -1,3 +1,3 @@
 export const ErrorCodes: { [key: number]: string } = {
-  200000: 'SOMETHING_WENT_WRONG',
+  200001: 'WALLET_NOT_FOUND',
 };
